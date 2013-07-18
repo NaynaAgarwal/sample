@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
  
   attr_accessible :name, :email, :password, :password_confirmation
+   has_secure_password
+
   before_save { self.email = email.downcase }
   before_create :create_remember_token
 
@@ -10,7 +12,7 @@ class User < ActiveRecord::Base
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false}
 
-  has_secure_password
+ 
 
   validates :password, length: {minimum: 6}
   
