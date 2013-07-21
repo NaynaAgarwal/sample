@@ -69,6 +69,18 @@ describe "with valid information" do
         end
       end
 
+      describe "in the Relationships controller" do
+        describe "submitting to the create action" do
+          before { post relationships_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete relationship_path(1) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
+
       describe "in the Microposts controller" do
 
         describe "submitting to the create action" do
@@ -98,7 +110,17 @@ describe "with valid information" do
           before { patch user_path(user) }
           specify { expect(response).to redirect_to(signin_path) }
         end
-      end
+        
+        describe "visiting the following page" do
+          before { visit following_user_path(user) }
+          it { should have_title('Sign in') }
+        end
+
+        describe "visiting the followers page" do
+          before { visit followers_user_path(user) }
+          it { should have_title('Sign in') }
+        end
+      end  #end of in the users controller block
     end
 
    describe "as wrong user" do
